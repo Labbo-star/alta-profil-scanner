@@ -88,8 +88,7 @@ async function checkUpdate(){
     'Автообновление ещё не подключено. Один раз запусти INSTALL_UPDATER.bat из папки расширения, затем обнови расширение в browser://extensions.\n\n'+msg;
   }
  }finally{
-  if(checkUpdateBtn && !checkUpdateBtn.disabled)checkUpdateBtn.disabled=false;
-  else if(updateStatus && updateStatus.textContent.startsWith('Установлена актуальная'))checkUpdateBtn.disabled=false;
+  if(checkUpdateBtn)checkUpdateBtn.disabled=false;
  }
 }
 
