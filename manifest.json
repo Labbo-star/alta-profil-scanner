@@ -1,14 +1,15 @@
 {
   "manifest_version": 3,
   "name": "Alta-Profil → Tilda Scanner",
-  "version": "14.1.0",
-  "description": "Сначала тест 8 уникальных товаров, затем полный каталог; до 8 параллельных карточек.",
+  "version": "14.2.0",
+  "description": "Сканирование до 8 товаров параллельно + автообновление из GitHub внутри расширения.",
   "permissions": [
     "activeTab",
     "scripting",
     "storage",
     "downloads",
-    "tabs"
+    "tabs",
+    "nativeMessaging"
   ],
   "host_permissions": [
     "https://www.alta-profil.ru/*"
