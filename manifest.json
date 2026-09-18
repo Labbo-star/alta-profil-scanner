@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Alta-Profil → Tilda Scanner",
+  "version": "14.0.0",
+  "description": "Надёжное параллельное сканирование с автотестом первых 8 карточек, ретраями и полными галереями.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "downloads",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://www.alta-profil.ru/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Alta Scanner"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
