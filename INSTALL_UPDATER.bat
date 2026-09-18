@@ -73,7 +73,7 @@ if errorlevel 1 (
 )
 
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-  "$obj=[ordered]@{name='%HOSTNAME%';description='Alta-Profil Scanner GitHub updater';path='%EXE:\=\\%';type='stdio';allowed_origins=@('chrome-extension://%EXTID%/')};" ^
+  "$obj=[ordered]@{name='%HOSTNAME%';description='Alta-Profil Scanner GitHub updater';path='%EXE%';type='stdio';allowed_origins=@('chrome-extension://%EXTID%/')};" ^
   "$json=$obj|ConvertTo-Json -Depth 4;" ^
   "[IO.File]::WriteAllText('%MANIFEST%', $json, (New-Object Text.UTF8Encoding($false)))"
 
