@@ -51,38 +51,8 @@ function nativeMessage(message){
  });
 }
 
-async function checkUpdate(){
- const local=chrome.runtime.getManifest().version;
- if(updateStatus)updateStatus.textContent='Проверяю GitHub…';
- if(checkUpdateBtn)checkUpdateBtn.disabled=true;
- if(installUpdateBtn)installUpdateBtn.style.display='none';
- try{
-  const r=await nativeMessage({action:'check'});
-  if(!r.ok)throw new Error(r.error||'Неизвестная ошибка updater');
-  const remote=r.remoteVersion||'';
-  if(compareVersions(remote,local)>0){
-   if(updateStatus)updateStatus.textContent=`Доступна версия ${remote}. Сейчас установлена ${local}.`;
-   if(installUpdateBtn){
-    installUpdateBtn.dataset.version=remote;
-    installUpdateBtn.style.display='block';
-   }
-  }else{
-   if(updateStatus)updateStatus.textContent=`Установлена актуальная версия ${local}.`;
-  }
- }catch(e){
-  const msg=String(e.message||e);
-  if(updateStatus){
-   updateStatus.textContent=
-    'Автообновление ещё не подключено. Один раз запусти INSTALL_UPDATER.bat из папки расширения, затем обнови расширение в browser://extensions.\n\n'+msg;
-  }
- }finally{
-  if(checkUpdateBtn)checkUpdateBtn.disabled=false;
- }
-}
-
-async function installUpdate(){
- const target=installUpdateBtn?.dataset.version||'новую';
- if(updateStatus)updateStatus.textContent=`Устанавливаю версию ${target}… Не закрывай браузер.`;
+async function installUpdate(target='новую'){
+ if(updateStatus)updateStatus.textContent=`Нашёл версию ${target}. Устанавливаю… Не закрывай браузер.`;
  if(checkUpdateBtn)checkUpdateBtn.disabled=true;
  if(installUpdateBtn)installUpdateBtn.disabled=true;
  try{
@@ -94,6 +64,32 @@ async function installUpdate(){
   if(updateStatus)updateStatus.textContent='Ошибка обновления: '+(e.message||e);
   if(checkUpdateBtn)checkUpdateBtn.disabled=false;
   if(installUpdateBtn)installUpdateBtn.disabled=false;
+ }
+}
+
+async function checkUpdate(){
+ const local=chrome.runtime.getManifest().version;
+ if(updateStatus)updateStatus.textContent='Проверяю GitHub…';
+ if(checkUpdateBtn)checkUpdateBtn.disabled=true;
+ if(installUpdateBtn)installUpdateBtn.style.display='none';
+ try{
+  const r=await nativeMessage({action:'check'});
+  if(!r.ok)throw new Error(r.error||'Неизвестная ошибка updater');
+  const remote=r.remoteVersion||'';
+  if(compareVersions(remote,local)>0){
+   await installUpdate(remote);
+   return;
+  }
+  if(updateStatus)updateStatus.textContent=`Установлена актуальная версия ${local}.`;
+ }catch(e){
+  const msg=String(e.message||e);
+  if(updateStatus){
+   updateStatus.textContent=
+    'Автообновление ещё не подключено. Один раз запусти INSTALL_UPDATER.bat из папки расширения, затем обнови расширение в browser://extensions.\n\n'+msg;
+  }
+ }finally{
+  if(checkUpdateBtn && !checkUpdateBtn.disabled)checkUpdateBtn.disabled=false;
+  else if(updateStatus && updateStatus.textContent.startsWith('Установлена актуальная'))checkUpdateBtn.disabled=false;
  }
 }
 
@@ -143,7 +139,7 @@ document.getElementById('json').onclick=()=>send({type:'export',format:'json'});
 document.getElementById('yml').onclick=()=>send({type:'export',format:'yml'});
 document.getElementById('csv').onclick=()=>send({type:'export',format:'csv'});
 if(checkUpdateBtn)checkUpdateBtn.onclick=checkUpdate;
-if(installUpdateBtn)installUpdateBtn.onclick=installUpdate;
+if(installUpdateBtn)installUpdateBtn.onclick=()=>installUpdate(installUpdateBtn.dataset.version||'новую');
 if(copyIdBtn)copyIdBtn.onclick=async()=>{
  try{
   await navigator.clipboard.writeText(chrome.runtime.id);
