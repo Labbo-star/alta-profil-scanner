@@ -23,7 +23,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
   "Invoke-WebRequest -UseBasicParsing '%URL%' -OutFile '%ZIP%';" ^
   "Expand-Archive -LiteralPath '%ZIP%' -DestinationPath '%TMP%' -Force;" ^
   "$src=Join-Path '%TMP%' 'alta-profil-scanner-main';" ^
-  "$files=@('manifest.json','background.js','product.js','popup.js','popup.html','README.md');" ^
+  "$files=@('manifest.json','background.js','background-v14.1.js','product.js','popup.js','popup.html','README.md');" ^
   "foreach($f in $files){$p=Join-Path $src $f; if(Test-Path $p){Copy-Item -LiteralPath $p -Destination (Join-Path '%ROOT%' $f) -Force}};" ^
   "Write-Host '';" ^
   "Write-Host 'Файлы обновлены.' -ForegroundColor Green;"
