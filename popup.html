@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><style>
+body{font:14px Arial;width:445px;padding:16px;margin:0}
+h2{font-size:17px;margin:0 0 8px}
+.info{font-size:12px;color:#555;line-height:1.45;margin-bottom:10px}
+.row{display:flex;gap:8px;align-items:center;margin:8px 0}
+.row label{flex:1;font-size:12px;color:#555}
+select{width:135px;padding:8px;border:1px solid #ddd;border-radius:7px;background:#fff}
+button,.fileLabel{box-sizing:border-box;width:100%;padding:10px;margin:5px 0;border:0;border-radius:7px;cursor:pointer;text-align:center;display:block}
+.primary{background:#e90067;color:#fff}.dark{background:#111;color:#fff}.secondary{background:#eee;color:#111}.danger{background:#555;color:#fff}
+#file{display:none}
+#status{white-space:pre-wrap;background:#f5f5f5;padding:10px;border-radius:7px;margin:10px 0;min-height:135px;max-height:260px;overflow:auto}
+small{color:#666;display:block;margin-top:8px;line-height:1.4}
+</style></head><body>
+<h2>Alta-Profil → Tilda v14</h2>
+<div class="info"><b>Защита от долгих ошибочных прогонов:</b> после сбора ссылок расширение сначала проверяет 8 карточек. Если парсер не работает, полный проход 882 товаров вообще не запускается.</div>
+
+<div class="row">
+  <label for="workers">Параллельных карточек:</label>
+  <select id="workers">
+    <option value="2">2 — максимально надёжно</option>
+    <option value="3">3 — быстро</option>
+    <option value="4" selected>4 — оптимально</option>
+  </select>
+</div>
+
+<div id="status">Готов.</div>
+<button class="primary" id="scanAll">1. Собрать 3 группы</button>
+<label class="fileLabel secondary" for="file">2. Загрузить текущий CSV из Tilda</label>
+<input id="file" type="file" accept=".csv,text/csv">
+<button class="dark" id="photoUpdate">3. Экспорт обновления фото по Tilda UID</button>
+<button class="secondary" id="json">Экспорт JSON для проверки</button>
+<button class="secondary" id="yml">Экспорт YML</button>
+<button class="secondary" id="csv">Экспорт полного CSV</button>
+<button class="danger" id="clear">Очистить базу</button>
+
+<small>v14 не требует заранее увидеть блок «Характеристики». Она открывает карточку, запускает реальный парсер несколько раз и продолжает только когда сам парсер вернул название + характеристики.</small>
+<script src="popup.js"></script></body></html>
