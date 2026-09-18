@@ -58,8 +58,8 @@ async function send(msg){
 }
 
 document.getElementById('scanAll').onclick=()=>{
- const workers=Math.max(2,Math.min(4,Number(workersEl.value)||4));
- send({type:'scanAll',workers});
+ const workers=Math.max(1,Math.min(8,Number(workersEl.value)||8));
+ send({type:'scanAllFast',workers});
 };
 document.getElementById('photoUpdate').onclick=()=>send({type:'export',format:'photo-update'});
 document.getElementById('json').onclick=()=>send({type:'export',format:'json'});
