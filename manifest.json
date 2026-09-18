@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Alta-Profil → Tilda Scanner",
-  "version": "14.2.0",
-  "description": "Сканирование до 8 товаров параллельно + автообновление из GitHub внутри расширения.",
+  "version": "14.2.1",
+  "description": "Сканирование до 8 товаров параллельно + исправленная установка автообновления из GitHub.",
   "permissions": [
     "activeTab",
     "scripting",
