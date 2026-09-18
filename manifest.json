@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Alta-Profil → Tilda Scanner",
-  "version": "14.0.0",
-  "description": "Надёжное параллельное сканирование с автотестом первых 8 карточек, ретраями и полными галереями.",
+  "version": "14.1.0",
+  "description": "Сначала тест 8 уникальных товаров, затем полный каталог; до 8 параллельных карточек.",
   "permissions": [
     "activeTab",
     "scripting",
@@ -18,6 +18,6 @@
     "default_title": "Alta Scanner"
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background-v14.1.js"
   }
 }
