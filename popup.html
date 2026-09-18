@@ -1,19 +1,31 @@
 <!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><style>
-body{font:14px Arial;width:445px;padding:16px;margin:0}
+body{font:14px Arial;width:455px;padding:16px;margin:0}
 h2{font-size:17px;margin:0 0 8px}
 .info{font-size:12px;color:#555;line-height:1.45;margin-bottom:10px}
 .row{display:flex;gap:8px;align-items:center;margin:8px 0}
 .row label{flex:1;font-size:12px;color:#555}
 select{width:135px;padding:8px;border:1px solid #ddd;border-radius:7px;background:#fff}
 button,.fileLabel{box-sizing:border-box;width:100%;padding:10px;margin:5px 0;border:0;border-radius:7px;cursor:pointer;text-align:center;display:block}
-.primary{background:#e90067;color:#fff}.dark{background:#111;color:#fff}.secondary{background:#eee;color:#111}.danger{background:#555;color:#fff}
+button:disabled{opacity:.55;cursor:default}
+.primary{background:#e90067;color:#fff}.dark{background:#111;color:#fff}.secondary{background:#eee;color:#111}.danger{background:#555;color:#fff}.update{background:#155eef;color:#fff}
 #file{display:none}
 #status{white-space:pre-wrap;background:#f5f5f5;padding:10px;border-radius:7px;margin:10px 0;min-height:135px;max-height:260px;overflow:auto}
+.updateBox{border:1px solid #ddd;border-radius:9px;padding:10px;margin:12px 0;background:#fafafa}
+.updateTitle{font-weight:700;margin-bottom:6px}.updateStatus{font-size:12px;white-space:pre-wrap;line-height:1.4;color:#444;margin:6px 0}
+.idline{font-size:11px;color:#777;word-break:break-all;margin-top:7px}.idline button{width:auto;display:inline-block;padding:5px 8px;margin-left:5px;font-size:11px}
 small{color:#666;display:block;margin-top:8px;line-height:1.4}
 </style></head><body>
-<h2>Alta-Profil → Tilda v14.1</h2>
+<h2>Alta-Profil → Tilda v14.2</h2>
 <div class="info"><b>Сначала тест 8 товаров:</b> расширение находит только 8 уникальных карточек, прогоняет их параллельно и лишь при результате 8/8 начинает искать весь каталог.</div>
+
+<div class="updateBox">
+  <div class="updateTitle">Обновления</div>
+  <div id="updateStatus" class="updateStatus">Нажми «Проверить обновления».</div>
+  <button class="secondary" id="checkUpdate">Проверить обновления</button>
+  <button class="update" id="installUpdate" style="display:none">Установить обновление</button>
+  <div class="idline">ID расширения: <span id="extensionId"></span><button class="secondary" id="copyId">Скопировать ID</button></div>
+</div>
 
 <div class="row">
   <label for="workers">Параллельных карточек:</label>
@@ -35,5 +47,5 @@ small{color:#666;display:block;margin-top:8px;line-height:1.4}
 <button class="secondary" id="csv">Экспорт полного CSV</button>
 <button class="danger" id="clear">Очистить базу</button>
 
-<small>v14.1 сначала проверяет только 8 уникальных товаров. Максимум одновременно обрабатываются 8 карточек. Полный поиск каталога начинается только после успешного теста 8/8.</small>
+<small>Для автообновления нужно один раз запустить INSTALL_UPDATER.bat из папки расширения. После этого обновления ставятся прямо из этого окна.</small>
 <script src="popup.js"></script></body></html>
