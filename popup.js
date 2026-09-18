@@ -45,7 +45,7 @@ function nativeMessage(message){
   chrome.runtime.sendNativeMessage(HOST,message,response=>{
    const err=chrome.runtime.lastError;
    if(err){reject(new Error(err.message));return}
-   if(!response){reject(new Error('Updater не вернул ответ'));return}
+   if(!response){reject(new Error('Native updater не вернул ответ'));return}
    resolve(response);
   });
  });
@@ -61,7 +61,7 @@ async function installUpdate(target='новую'){
   if(updateStatus)updateStatus.textContent=`Версия ${r.remoteVersion||target} установлена. Перезапускаю расширение…`;
   setTimeout(()=>chrome.runtime.reload(),700);
  }catch(e){
-  if(updateStatus)updateStatus.textContent='Ошибка обновления: '+(e.message||e);
+  if(updateStatus)updateStatus.textContent='Ошибка обновления:\n'+(e.message||e)+'\n\nЗапусти CHECK_UPDATER.bat и пришли диагностический файл, если ошибка повторится.';
   if(checkUpdateBtn)checkUpdateBtn.disabled=false;
   if(installUpdateBtn)installUpdateBtn.disabled=false;
  }
@@ -69,7 +69,7 @@ async function installUpdate(target='новую'){
 
 async function checkUpdate(){
  const local=chrome.runtime.getManifest().version;
- if(updateStatus)updateStatus.textContent='Проверяю GitHub…';
+ if(updateStatus)updateStatus.textContent='Проверяю GitHub через локальный updater…';
  if(checkUpdateBtn)checkUpdateBtn.disabled=true;
  if(installUpdateBtn)installUpdateBtn.style.display='none';
  try{
@@ -80,12 +80,16 @@ async function checkUpdate(){
    await installUpdate(remote);
    return;
   }
-  if(updateStatus)updateStatus.textContent=`Установлена актуальная версия ${local}.`;
+  if(updateStatus)updateStatus.textContent=`Связь с updater работает. Установлена актуальная версия ${local}.`;
  }catch(e){
   const msg=String(e.message||e);
   if(updateStatus){
    updateStatus.textContent=
-    'Автообновление ещё не подключено. Один раз запусти INSTALL_UPDATER.bat из папки расширения, затем обнови расширение в browser://extensions.\n\n'+msg;
+    `Не удалось связаться с локальным updater.\n\nОшибка браузера: ${msg}\n\n`+
+    `1) Запусти обновлённый INSTALL_UPDATER.bat.\n`+
+    `2) Проверь, что он пишет «УСТАНОВКА УСПЕШНА».\n`+
+    `3) ПОЛНОСТЬЮ закрой все окна Яндекс.Браузера и открой его снова.\n`+
+    `4) Если не поможет — запусти CHECK_UPDATER.bat.`;
   }
  }finally{
   if(checkUpdateBtn)checkUpdateBtn.disabled=false;
